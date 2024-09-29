@@ -32,7 +32,7 @@ public class InstructorController {
     @GetMapping("/instructors/new")
     public String showInstructorForm(Model model) {
         model.addAttribute("instructor", new InstructorDto());
-        return "instructor-form";
+        return "instructors-form";
     }
 
     @PostMapping("/instructors/save")
@@ -45,7 +45,7 @@ public class InstructorController {
     public String searchInstructor(@RequestParam String firstName, Model model) {
         List<InstructorDto> instructors = instructorService.findAllByFirstName(firstName);
         model.addAttribute("instructors", instructors);
-        return "instructor-search-results";
+        return "instructors-search-results";
     }
 
     @PutMapping("UpdateInstructor/{id}")
