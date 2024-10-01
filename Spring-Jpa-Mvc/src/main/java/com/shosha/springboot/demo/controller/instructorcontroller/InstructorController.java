@@ -12,76 +12,79 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 @Controller
+@RequestMapping("/instructors")
 public class InstructorController {
     private final InstructorService instructorService;
 
-    public InstructorController(InstructorService instructorService,
-                                AddressRepository addressRepository, CourseRepository courseRepository) {
+    public InstructorController(InstructorService instructorService) {
         this.instructorService = instructorService;
     }
 
-    @GetMapping("/instructors")
+    @GetMapping
     public String listInstructors(Model model) {
         List<InstructorDto> instructors = instructorService.findAll();
         model.addAttribute("instructors", instructors);
         return "list-instructors";
     }
 
-    @GetMapping("/instructors/new")
+    @GetMapping("/new")
     public String showInstructorForm(Model model) {
         model.addAttribute("instructor", new InstructorDto());
         return "instructors-form";
     }
 
-    @PostMapping("/instructors/save")
-    public String saveInstructor(@ModelAttribute InstructorDto instructorDto) throws SqlConstraintException  {
+    @PostMapping("/save")
+    public String saveInstructor(@ModelAttribute InstructorDto instructorDto) throws SqlConstraintException {
         instructorService.save(instructorDto);
         return "redirect:/instructors";
     }
 
-    @GetMapping("/instructors/search")
+    @GetMapping("/search")
     public String searchInstructor(@RequestParam String firstName, Model model) {
         List<InstructorDto> instructors = instructorService.findAllByFirstName(firstName);
         model.addAttribute("instructors", instructors);
         return "instructors-search-results";
     }
 
-    @PutMapping("UpdateInstructor/{id}")
-    public void updateInstructor(@RequestBody InstructorDto instructorDto,
-                                 @PathVariable String id) throws InstructorNotFoundException {
-        instructorService.update(instructorDto, id);
+    @GetMapping("/{id}/edit")
+    public String showUpdateInstructorForm(@PathVariable String id, Model model) {
+        InstructorDto instructorDto = instructorService.getInstructorDtoById(id);
+        model.addAttribute("instructor", instructorDto); // Ensure this line is correct
+        return "instructors-form-update"; // Points to the correct update form
     }
 
-    @GetMapping("GetInstructor/{id}")
-    public InstructorDto getInstructor(@PathVariable String id) {
-        return instructorService.getInstructorDtoById(id);
+    @GetMapping("/{id}")
+    public String getInstructor(@PathVariable String id, Model model) {
+        InstructorDto instructorDto = instructorService.getInstructorDtoById(id);
+        model.addAttribute("instructor", instructorDto);
+        return "instructor-details";
     }
 
-/*    @GetMapping("GetId/{email}")
-    public String getIdOfTheInstructor(@PathVariable String email) {
-        return instructorService.findIdByEmail(email);
-    }*/
-
-    @GetMapping("GetCourseCode/{email}")
-    public String getCourseCodeOfTheInstructor(@PathVariable String email) {
-        return instructorService.findCourseCodeByEmail(email);
+    @GetMapping("/{email}/courseCode")
+    public String getCourseCodeOfTheInstructor(@PathVariable String email, Model model) {
+        String courseCode = instructorService.findCourseCodeByEmail(email);
+        model.addAttribute("courseCode", courseCode);
+        return "instructor-course-code";
     }
 
-    @GetMapping("GetAddress/{email}")
-    public AddressDto getAddressOfTheInstructor(@PathVariable String email) {
-        return instructorService.findAddressByEmail(email);
+    @GetMapping("/{email}/address")
+    public String getAddressOfTheInstructor(@PathVariable String email, Model model) {
+        AddressDto addressDto = instructorService.findAddressByEmail(email);
+        model.addAttribute("address", addressDto);
+        return "instructor-address";
     }
 
-    @DeleteMapping("DeleteInstructor/{id}")
-    public void deleteInstructorById(@PathVariable String id) {
+    @PostMapping("/{id}/delete")
+    public String deleteInstructorById(@PathVariable String id) {
         instructorService.delete(id);
+        return "redirect:/instructors";
     }
 
-    @GetMapping("GetAddressByCourseName/{courseName}")
-    public AddressDto getAddressByCourseName(@PathVariable String courseName) {
-        return instructorService.findAddressByCourseName(courseName);
+    @GetMapping("/course/{courseName}/address")
+    public String getAddressByCourseName(@PathVariable String courseName, Model model) {
+        AddressDto addressDto = instructorService.findAddressByCourseName(courseName);
+        model.addAttribute("address", addressDto);
+        return "course-address";
     }
-
 }

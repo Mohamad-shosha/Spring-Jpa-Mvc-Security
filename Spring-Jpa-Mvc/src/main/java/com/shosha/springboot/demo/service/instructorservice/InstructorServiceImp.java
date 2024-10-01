@@ -45,7 +45,7 @@ public class InstructorServiceImp implements InstructorService {
     @Override
     public Instructor findById(String id) {
         Optional<Instructor> instructor = instructorRepository.findById(id);
-        if (!instructor.isPresent()) {
+        if (instructor.isEmpty()) {
             log.error("Could not find instructor with id {}", id);
             throw new InstructorNotFoundException("Instructor not found with id : " + id);
         } else {
@@ -76,7 +76,7 @@ public class InstructorServiceImp implements InstructorService {
     @Override
     public Optional<Instructor> findInstructorByEmail(String email) throws InstructorNotFoundException {
         Optional<Instructor> instructor = instructorRepository.findByEmail(email);
-        if (!instructor.isPresent()) {
+        if (instructor.isEmpty()) {
             log.error("Instructor not found with email {}", email);
             throw new InstructorNotFoundException("Instructor not found with email : " + email);
         } else {
@@ -124,7 +124,7 @@ public class InstructorServiceImp implements InstructorService {
     @Override
     public void delete(String id) throws InstructorNotFoundException {
         Optional<Instructor> instructor = instructorRepository.findById(id);
-        if (!instructor.isPresent()) {
+        if (instructor.isEmpty()) {
             log.error("Could not find instructor to delete with id {}", id);
             throw new InstructorNotFoundException("Instructor not found with id : " + id);
         } else {
@@ -137,7 +137,7 @@ public class InstructorServiceImp implements InstructorService {
     @Override
     public AddressDto findAddressByEmail(String email) throws InstructorNotFoundException {
         Optional<Instructor> instructor = instructorRepository.findByEmail(email);
-        if (!instructor.isPresent()) {
+        if (instructor.isEmpty()) {
             log.error("Could not find instructor with email {}", email);
             throw new InstructorNotFoundException("Instructor not found with email : " + email);
         }
@@ -148,7 +148,7 @@ public class InstructorServiceImp implements InstructorService {
 
     public AddressDto findAddressByCourseName(String courseName) {
         Optional<Instructor> instructor = instructorRepository.findByCourseName(courseName);
-        if (!instructor.isPresent()) {
+        if (instructor.isEmpty()) {
             log.error("Could not find instructor with course name {}", courseName);
             throw new InstructorNotFoundException("Instructor not found with course name : " + courseName);
         }
