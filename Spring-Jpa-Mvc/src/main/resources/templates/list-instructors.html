@@ -6,9 +6,36 @@
     <title>Instructors List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/list-instructors.css">
-
 </head>
 <body>
+
+<!-- Enhanced Navbar with custom styling -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="/instructors">Instructor Management</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/instructors">Instructors List</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/instructors/new">Add New Instructor</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More Options
+                </a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="get">
+            <input class="form-control mr-sm-2" type="search" name="firstName" placeholder="Search by First Name" aria-label="Search" required>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
 <div class="container my-5">
     <h1>Instructors List</h1>
     <div class="row">
@@ -23,11 +50,15 @@
                             <strong class="highlight">Address:</strong> <span th:text="${instructor.address.street} + ', ' + ${instructor.address.city} + ', ' + ${instructor.address.state}"></span><br>
                             <strong class="highlight">Course:</strong> <span th:text="${instructor.course.name}"></span>
                         </p>
+                        <a th:href="@{/instructors/edit/{id}(id=${instructor.id})}" class="btn btn-warning">Update</a>
+                        <a th:href="@{/instructors/delete/{id}(id=${instructor.id})}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this instructor?');">Delete</a>
                     </div>
                 </div>
             </div>
         </th:block>
     </div>
+
+    <a href="/instructors/new" class="btn btn-primary">Add New Instructor</a>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

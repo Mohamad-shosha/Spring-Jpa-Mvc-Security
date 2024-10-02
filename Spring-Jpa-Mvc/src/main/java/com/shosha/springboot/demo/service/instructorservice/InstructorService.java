@@ -14,12 +14,14 @@ import java.util.Optional;
  */
 public interface InstructorService {
 
+    public List<Instructor> findAllInstructors();
+
     /**
      * Retrieves a list of all instructors.
      *
      * @return a list of InstructorDto objects representing all instructors
      */
-    List<InstructorDto> findAll();
+    List<InstructorDto> findAllInstructorsDto();
 
     /**
      * Retrieves a list of all instructors whose first name matches the given string.

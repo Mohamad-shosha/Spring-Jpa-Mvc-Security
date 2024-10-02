@@ -29,9 +29,16 @@ public class InstructorServiceImp implements InstructorService {
     }
 
     @Override
-    public List<InstructorDto> findAll() {
+    public List<Instructor> findAllInstructors() {
         List<Instructor> instructors = instructorRepository.findAll();
         log.info("The list of instructors is {}", instructors);
+        return instructors;
+    }
+
+    @Override
+    public List<InstructorDto> findAllInstructorsDto() {
+        List<Instructor> instructors = instructorRepository.findAll();
+        log.info("The list of instructors dto is {}", instructors);
         return instructors.stream().map(InstructorTransformation::transformToInstructorDto).toList();
     }
 
