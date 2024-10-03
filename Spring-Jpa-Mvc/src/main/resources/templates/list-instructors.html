@@ -6,10 +6,58 @@
     <title>Instructors List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/list-instructors.css">
-    <link rel="stylesheet" href="/css/navbar.css">
+    <style>
+        .navbar {
+            background-color: #343a40;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #ffffff !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff !important;
+            padding: 10px 15px;
+            transition: background-color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            background-color: #495057;
+            border-radius: 5px;
+        }
+
+        .dropdown-menu {
+            background-color: #343a40;
+            border: none;
+        }
+
+        .dropdown-item {
+            color: #ffffff;
+            padding: 10px 20px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #495057;
+        }
+
+        .form-inline .form-control {
+            border-radius: 5px;
+        }
+
+        .btn-outline-success {
+            border-color: #28a745;
+            color: #28a745;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #28a745;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-
 <nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" href="/instructors">Instructor Management</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,18 +75,16 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <h6 class="dropdown-header">Instructor Options</h6>
                     <a class="dropdown-item" href="/instructors/getCourseCode">Get Course Code by Email</a>
-                    <a class="dropdown-item" href="/address/{email}">Get Address by Email</a>
-                    <a class="dropdown-item" href="/course/address/{courseName}">Get Address by Course Name</a>
+                    <a class="dropdown-item" href="/instructors/getAddress">Get Address by Email</a>
+                    <a class="dropdown-item" href="/instructors/getCourse">Get Address by Course Name</a>
                     <div class="dropdown-divider"></div>
                     <h6 class="dropdown-header">Other Options</h6>
                     <a class="dropdown-item" href="/someOtherAction">Some Other Action</a>
                     <a class="dropdown-item" href="/anotherAction">Another Action</a>
                 </div>
             </li>
-
-
         </ul>
-        <form class="form-inline my-2 my-lg-0" th:action="@{/instructors/search}" method="get">
+        <form class="form-inline my-2 my-lg-0" action="/instructors/search" method="get">
             <input class="form-control mr-sm-2" type="search" name="firstName" placeholder="Search by First Name" aria-label="Search" required>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>

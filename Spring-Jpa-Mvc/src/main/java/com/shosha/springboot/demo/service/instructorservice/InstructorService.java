@@ -14,7 +14,9 @@ import java.util.Optional;
  */
 public interface InstructorService {
 
-    public List<Instructor> findAllInstructors();
+    List<Instructor> findAllInstructors();
+
+    List<Instructor> findInstructorByFirstName(String firstName);
 
     /**
      * Retrieves a list of all instructors.
@@ -119,4 +121,5 @@ public interface InstructorService {
      * @throws InstructorNotFoundException if no instructor is found for the provided course name
      */
     AddressDto findAddressByCourseName(String courseName) throws InstructorNotFoundException;
+
 }

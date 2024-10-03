@@ -8,11 +8,11 @@
 <body>
 <div class="address-container">
     <h1>Instructor Address</h1>
-    <p><strong>Street:</strong> <span th:text="${address.street}"></span></p>
-    <p><strong>City:</strong> <span th:text="${address.city}"></span></p>
-    <p><strong>State:</strong> <span th:text="${address.state}"></span></p>
-    <p><strong>Zip:</strong> <span th:text="${address.zip}"></span></p>
-    <p><strong>Country:</strong> <span th:text="${address.country}"></span></p>
+    <p><strong>Street:</strong> <span th:text="${instructorDto.getAddress().street}"></span></p>
+    <p><strong>City:</strong> <span th:text="${instructorDto.getAddress().city}"></span></p>
+    <p><strong>State:</strong> <span th:text="${instructorDto.getAddress().state}"></span></p>
+    <p><strong>Zip:</strong> <span th:text="${instructorDto.getAddress().zip}"></span></p>
+    <p><strong>Country:</strong> <span th:text="${instructorDto.getAddress().country}"></span></p>
     <a href="/instructors">Back to List</a>
 </div>
 </body>

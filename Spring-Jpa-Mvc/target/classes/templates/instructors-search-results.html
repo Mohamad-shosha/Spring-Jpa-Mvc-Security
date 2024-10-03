@@ -30,6 +30,10 @@
                             <strong class="highlight">Address:</strong> <span th:text="${instructor.address.street} + ', ' + ${instructor.address.city} + ', ' + ${instructor.address.state}"></span><br>
                             <strong class="highlight">Course:</strong> <span th:text="${instructor.course.name}"></span>
                         </p>
+                        <div class="btn-group" role="group">
+                            <a th:href="@{/instructors/edit/{id}(id=${instructor.id})}" class="btn btn-warning mr-2">Update</a>
+                            <a th:href="@{/instructors/delete/{id}(id=${instructor.id})}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this instructor?');">Delete</a>
+                        </div>
                     </div>
                 </div>
             </div>

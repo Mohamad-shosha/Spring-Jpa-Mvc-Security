@@ -43,8 +43,8 @@ public class InstructorController {
 
     @GetMapping("/search")
     public String searchInstructor(@RequestParam String firstName, Model model) {
-        List<InstructorDto> instructors = instructorService.findAllByFirstName(firstName);
-        model.addAttribute("instructors", instructors);
+        List<Instructor> instructor = instructorService.findInstructorByFirstName(firstName);
+        model.addAttribute("instructors", instructor);
         return "instructors-search-results";
     }
 
@@ -87,11 +87,22 @@ public class InstructorController {
             return "redirect:/instructors";
     }
 
-    @GetMapping("/address/{email}")
-    public String getAddressOfTheInstructor(@PathVariable String email, Model model) {
-        AddressDto addressDto = instructorService.findAddressByEmail(email);
-        model.addAttribute("address", addressDto);
-        return "instructor-address";
+    @GetMapping("/getAddress")
+    public String getAddressOfTheInstructor(Model model) {
+        model.addAttribute("instructorAddress", new InstructorDto());
+        return "instructors-get-address";
+    }
+
+    @GetMapping("/address")
+    public String getAddressOfTheInstructor(@RequestParam String email, Model model) {
+        Optional<Instructor> instructor = instructorService.findInstructorByEmail(email);
+        if (instructor.isPresent()) {
+            model.addAttribute("instructorDto",
+                    InstructorTransformation.transformToInstructorDto(instructor.get()));
+            return "instructor-address";
+        } else {
+            return "redirect:/instructors";
+        }
     }
 
     @GetMapping("/delete/{id}")
@@ -100,8 +111,14 @@ public class InstructorController {
         return "redirect:/instructors";
     }
 
-    @GetMapping("/course/address/{courseName}")
-    public String getAddressByCourseName(@PathVariable String courseName, Model model) {
+    @GetMapping("/getCourse")
+    public String getAddressByCourseName(Model model) {
+        model.addAttribute("courseAddress", new InstructorDto());
+        return "instructors-get-address-course-name";
+    }
+
+    @GetMapping("/course/address")
+    public String getAddressByCourseName(@RequestParam String courseName, Model model) {
         AddressDto addressDto = instructorService.findAddressByCourseName(courseName);
         model.addAttribute("address", addressDto);
         return "course-address";

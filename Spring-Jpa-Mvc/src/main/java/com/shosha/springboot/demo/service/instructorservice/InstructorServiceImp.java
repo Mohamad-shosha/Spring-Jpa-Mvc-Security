@@ -36,6 +36,13 @@ public class InstructorServiceImp implements InstructorService {
     }
 
     @Override
+    public List<Instructor> findInstructorByFirstName(String firstName) {
+        List<Instructor> instructors = instructorRepository.findAllByFirstName(firstName);
+        log.info("The list of instructors with first name : {} is {}",firstName, instructors);
+        return instructors;
+    }
+
+    @Override
     public List<InstructorDto> findAllInstructorsDto() {
         List<Instructor> instructors = instructorRepository.findAll();
         log.info("The list of instructors dto is {}", instructors);
