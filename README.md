@@ -119,7 +119,7 @@ Run your Spring Boot application. The server will start at `http://localhost:808
 
 ## 🎥 Demo
 
-[Watch the demo video here] (vedio not perpared)(https://github.com/your-repo/demo-link).
+[Watch the demo video here] (vedio not perpared)([https://github.com/your-repo/demo-link](https://github.com/Mohamad-shosha/Spring-Jpa-Mvc/blob/main/shosha20241004%20020452626.mp4)).
 
 ---
 
