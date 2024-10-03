@@ -23,7 +23,7 @@ public interface InstructorCustomRepository {
      * @param email the email address of the instructor
      * @return the course code associated with the given email address, or null if no course is found for that email
      */
-    String getCourseCodeByEmail(String email);
+    Object getCourseCodeByEmail(String email);
 
     /**
      * Retrieves the address associated with the given instructor's email address.

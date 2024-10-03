@@ -6,13 +6,10 @@
     <title>Instructors List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/list-instructors.css">
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="/css/navbar.css">
 </head>
 <body>
 
-<!-- Enhanced Navbar with custom styling -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <a class="navbar-brand" href="/instructors">Instructor Management</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,18 +18,20 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" href="/instructors">Instructors List</a>
-            </li>
-            <li class="nav-item">
                 <a class="nav-link" href="/instructors/new">Add New Instructor</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     More Options
                 </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="instructors/getCourseCode">Get Course Code by email</a>
+                    <a class="dropdown-item" href="/address/{email}">Get Address by email</a>
+                    <a class="dropdown-item" href="/course/address/{courseName}">Get Address by Course Name</a>
+                </div>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0" th:action="@{/search}" method="get">
+        <form class="form-inline my-2 my-lg-0" th:action="@{/instructors/search}" method="get">
             <input class="form-control mr-sm-2" type="search" name="firstName" placeholder="Search by First Name" aria-label="Search" required>
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>

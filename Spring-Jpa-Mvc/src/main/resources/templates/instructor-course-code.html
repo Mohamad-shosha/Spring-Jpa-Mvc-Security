@@ -2,11 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instructor Course Code</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Course Code</h1>
-<p th:text="'Course Code: ' + ${courseCode}"></p>
-<a href="/instructors">Back to List</a>
+<div class="container mt-5">
+    <h1 class="text-center">Instructor Course Code</h1>
+
+    <div class="mt-4">
+        <h4 class="text-center" th:text="'Course Code: ' + ${instructorDto.getCourse().getCode()}"></h4>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/instructors/getCourseCode" class="btn btn-secondary">Back to Get Course Code</a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

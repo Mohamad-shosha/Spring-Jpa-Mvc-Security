@@ -75,7 +75,7 @@ public class InstructorServiceImp implements InstructorService {
 
     @Override
     public String findCourseCodeByEmail(String email) throws InstructorNotFoundException {
-        String codeOfCourse = instructorRepository.getCourseCodeByEmail(email);
+        String codeOfCourse = (String) instructorRepository.getCourseCodeByEmail(email);
         log.info("The code is {},Where email is {}", codeOfCourse, email);
         return codeOfCourse;
     }

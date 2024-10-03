@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/instructors")
@@ -57,10 +58,9 @@ public class InstructorController {
     @PostMapping("/update/{id}")
     public String updateInstructor(@PathVariable String id, @ModelAttribute Instructor instructor) throws SqlConstraintException {
         InstructorDto instructorDto = InstructorTransformation.transformToInstructorDto(instructor);
-        instructorService.update(instructorDto,id);
+        instructorService.update(instructorDto, id);
         return "redirect:/instructors";
     }
-
 
     @GetMapping("/{id}")
     public String getInstructor(@PathVariable String id, Model model) {
@@ -70,27 +70,37 @@ public class InstructorController {
         return "instructor-details";
     }
 
-    @GetMapping("/{email}/courseCode")
-    public String getCourseCodeOfTheInstructor(@PathVariable String email, Model model) {
-        String courseCode = instructorService.findCourseCodeByEmail(email);
-        model.addAttribute("courseCode", courseCode);
-        return "instructor-course-code";
+    @GetMapping("/getCourseCode")
+    public String getCourseCodeOfTheInstructor(Model model) {
+        model.addAttribute("instructorEmail", new InstructorDto());
+        return "instructors-get-course-code";
     }
 
-    @GetMapping("/{email}/address")
+    @GetMapping("/courseCode")
+    public String getCourseCodeOfTheInstructorWithEmail(@RequestParam String email, Model model) {
+        Optional<Instructor> instructor = instructorService.findInstructorByEmail(email);
+        if (instructor.isPresent()) {
+            model.addAttribute("instructorDto",
+                    InstructorTransformation.transformToInstructorDto(instructor.get()));
+            return "instructor-course-code";
+        } else
+            return "redirect:/instructors";
+    }
+
+    @GetMapping("/address/{email}")
     public String getAddressOfTheInstructor(@PathVariable String email, Model model) {
         AddressDto addressDto = instructorService.findAddressByEmail(email);
         model.addAttribute("address", addressDto);
         return "instructor-address";
     }
 
-    @PostMapping("/{id}/delete")
+    @GetMapping("/delete/{id}")
     public String deleteInstructorById(@PathVariable String id) {
         instructorService.delete(id);
         return "redirect:/instructors";
     }
 
-    @GetMapping("/course/{courseName}/address")
+    @GetMapping("/course/address/{courseName}")
     public String getAddressByCourseName(@PathVariable String courseName, Model model) {
         AddressDto addressDto = instructorService.findAddressByCourseName(courseName);
         model.addAttribute("address", addressDto);

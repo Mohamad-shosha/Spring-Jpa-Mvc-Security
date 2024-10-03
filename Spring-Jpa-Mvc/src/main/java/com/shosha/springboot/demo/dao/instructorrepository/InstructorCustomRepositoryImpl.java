@@ -13,7 +13,7 @@ public class InstructorCustomRepositoryImpl implements InstructorCustomRepositor
 
     @Override
     public String getIdByEmail(String email) {
-        String sql = "SELECT instructor_id FROM Instructor WHERE email = :email";
+        String sql = "SELECT I FROM Instructor I WHERE I.email = :email";
         Query query = entityManager.createQuery(sql);
         query.setParameter("email", email);
         return (String) query.getSingleResult();
@@ -21,13 +21,12 @@ public class InstructorCustomRepositoryImpl implements InstructorCustomRepositor
 
     @Override
     public String getCourseCodeByEmail(String email) {
-        String sql = "SELECT course_code FROM Instructor I,Course C WHERE email = :email AND" +
-                " I.course_id = C.course_id";
+        String sql = "SELECT C.code FROM Instructor I JOIN Course C ON I.courseId = C.id WHERE I.email = :email";
         Query query = entityManager.createQuery(sql);
         query.setParameter("email", email);
         return (String) query.getSingleResult();
-
     }
+
 
     public Address getAddressFromInstructor(Instructor instructor) {
         String jpql = "SELECT A FROM Address A WHERE A.id = :addressId";

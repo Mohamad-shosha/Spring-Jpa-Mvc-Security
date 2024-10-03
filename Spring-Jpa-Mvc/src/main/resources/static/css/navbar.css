@@ -1,35 +1,22 @@
-.navbar {
+.dropdown-menu {
     background-color: #343a40;
+    border: none;
 }
 
-.navbar-brand {
+.dropdown-header {
     color: #fff;
     font-weight: bold;
-    font-size: 1.5rem;
 }
 
-.navbar-brand:hover {
-    color: #ddd;
-}
-
-.navbar-nav .nav-link {
+.dropdown-item {
     color: #fff;
 }
 
-.navbar-nav .nav-link:hover {
-    color: #ddd;
-}
-
-.form-inline .form-control {
-    border-radius: 20px;
-}
-
-.btn-outline-success {
+.dropdown-item:hover {
+    background-color: #495057;
     color: #fff;
-    border-color: #28a745;
 }
 
-.btn-outline-success:hover {
-    background-color: #28a745;
-    border-color: #28a745;
+.dropdown-divider {
+    background-color: #6c757d;
 }
