@@ -226,7 +226,9 @@ Add Spring Security dependency in your `pom.xml`:
 
 ## 🎥 Demo
 
-[Watch the demo video here]([https://drive.google.com/drive/folders/1cQkyXQUHpSO7XV-EUS8uM8-wmAYQZUMe](https://drive.google.com/drive/folders/1Z7WG3Q52P4SGVnE3FR706UXGT05RHmjF))
+Experience the functionality of the project in action! 
+
+👉 [**Watch the Demo Video Here**](https://drive.google.com/drive/folders/1cQkyXQUHpSO7XV-EUS8uM8-wmAYQZUMe)
 
 ---
 
