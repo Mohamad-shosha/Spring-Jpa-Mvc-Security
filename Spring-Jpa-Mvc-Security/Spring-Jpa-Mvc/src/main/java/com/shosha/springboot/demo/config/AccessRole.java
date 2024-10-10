@@ -3,7 +3,6 @@ package com.shosha.springboot.demo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -26,19 +25,19 @@ public class AccessRole {
     public InMemoryUserDetailsManager inMemoryUserDetailsManagerConfigurer() {
         UserDetails mohamed = User.builder()
                 .username("mohamed")
-                .password("{noop}shosha1235@@")
-                .roles("Admin")
+                .password("{noop}shosha1")
+                .roles("Employee", "Manager", "Admin")
                 .build();
 
         UserDetails karim = User.builder()
                 .username("karim")
-                .password("{noop}shosha12478@@")
-                .roles("Manager")
+                .password("{noop}shosha2")
+                .roles("Employee", "Manager")
                 .build();
 
         UserDetails eslam = User.builder()
                 .username("eslam")
-                .password("{noop}eslam12145@")
+                .password("{noop}eslam1")
                 .roles("Employee")
                 .build();
         return new InMemoryUserDetailsManager(eslam, karim, mohamed);
@@ -57,21 +56,25 @@ public class AccessRole {
 
         http.authorizeHttpRequests(configurer ->
                         configurer
-                                .requestMatchers("instructors/").hasRole("Employee")
-                                .requestMatchers("instructors/Manager").hasRole("Manager")
-                                .requestMatchers("instructors/Admin").hasRole("Admin")
+                                .requestMatchers("/").hasRole("Employee")
+                                .requestMatchers("/instructors/new/**").hasRole("Manager")
+                                .requestMatchers("/instructors/edit/**").hasRole("Manager")
+                                .requestMatchers("/instructors/").hasRole("Admin")
+                                .requestMatchers("/instructors/delete/**").hasRole("Admin")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form ->
                         form
-                                .loginPage("/instructors/login")
+                                .loginPage("/login")
                                 .loginProcessingUrl("/authenticateTheUser")
                                 .permitAll()
                 )
-                .logout(LogoutConfigurer::permitAll
-                )
+                .logout(logout ->
+                        logout.permitAll())
+
                 .exceptionHandling(configurer ->
-                        configurer.accessDeniedPage("/access-denied")
+                        configurer.accessDeniedPage("/instructors/access-denied")
+
                 );
 
         return http.build();
