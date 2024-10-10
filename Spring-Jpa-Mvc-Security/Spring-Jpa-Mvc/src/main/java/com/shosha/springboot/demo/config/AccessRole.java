@@ -25,19 +25,19 @@ public class AccessRole {
     public InMemoryUserDetailsManager inMemoryUserDetailsManagerConfigurer() {
         UserDetails mohamed = User.builder()
                 .username("mohamed")
-                .password("{noop}shosha1")
+                .password("{bcrypt}$2a$12$LFaWZL0xwj/LtTuWGSNmAO8i337.iYnddW2lBgyYn8CL4E.yHcsNy")
                 .roles("Employee", "Manager", "Admin")
                 .build();
 
         UserDetails karim = User.builder()
                 .username("karim")
-                .password("{noop}shosha2")
+                .password("{bcrypt}$2a$12$FaKD6z8mqO2M.oEFdhQ86e7bGpUnM7.E4qx/FjMpD2hkAP6SItjXi")
                 .roles("Employee", "Manager")
                 .build();
 
         UserDetails eslam = User.builder()
                 .username("eslam")
-                .password("{noop}eslam1")
+                .password("{bcrypt}$2a$12$d6vINCihOUr.5l21lBntjOeNtR.YQyprCDGOl2/6DoYhVE4J3OSY6")
                 .roles("Employee")
                 .build();
         return new InMemoryUserDetailsManager(eslam, karim, mohamed);
