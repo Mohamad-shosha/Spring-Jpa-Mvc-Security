@@ -100,7 +100,7 @@ public interface InstructorService {
      * Updates the details of an existing instructor identified by the provided id.
      *
      * @param instructorDto the data transfer object containing the updated details of the instructor
-     * @param id the unique identifier of the instructor to be updated
+     * @param id            the unique identifier of the instructor to be updated
      * @throws InstructorNotFoundException if no instructor is found with the provided id
      */
     void update(InstructorDto instructorDto, String id) throws InstructorNotFoundException;
@@ -121,5 +121,7 @@ public interface InstructorService {
      * @throws InstructorNotFoundException if no instructor is found for the provided course name
      */
     AddressDto findAddressByCourseName(String courseName) throws InstructorNotFoundException;
+
+    boolean isNullOrNot(String id) throws InstructorNotFoundException;
 
 }

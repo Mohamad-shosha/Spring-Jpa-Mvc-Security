@@ -38,7 +38,7 @@ public class InstructorServiceImp implements InstructorService {
     @Override
     public List<Instructor> findInstructorByFirstName(String firstName) {
         List<Instructor> instructors = instructorRepository.findAllByFirstName(firstName);
-        log.info("The list of instructors with first name : {} is {}",firstName, instructors);
+        log.info("The list of instructors with first name : {} is {}", firstName, instructors);
         return instructors;
     }
 
@@ -101,7 +101,7 @@ public class InstructorServiceImp implements InstructorService {
 
     @Override
     public void save(InstructorDto instructorDto) throws SqlConstraintException {
-        Instructor instructor = InstructorTransformation.transformToStudent(instructorDto);
+        Instructor instructor = InstructorTransformation.transformToInstructor(instructorDto);
         if (instructorRepository.existsByEmail(instructorDto.getEmail()) ||
                 courseRepository.existsByNameAndCode(instructor.getCourse().getName(),
                         instructorDto.getCourse().getCode())) {
@@ -168,5 +168,11 @@ public class InstructorServiceImp implements InstructorService {
         }
         return AddressTransformation.transformToAddressDto(instructorRepository.
                 getAddressByCourseName(courseName));
+    }
+
+    @Override
+    public boolean isNullOrNot(String id) throws InstructorNotFoundException {
+        Optional<Instructor> instructor = instructorRepository.findById(id);
+        return instructor.isPresent();
     }
 }

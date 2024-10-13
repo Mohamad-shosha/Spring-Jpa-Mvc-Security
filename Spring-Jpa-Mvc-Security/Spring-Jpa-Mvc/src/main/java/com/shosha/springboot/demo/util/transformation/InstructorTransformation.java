@@ -39,7 +39,7 @@ public class InstructorTransformation {
      * @param instructorDto the InstructorDto object to be transformed
      * @return the transformed Instructor entity
      */
-    public static Instructor transformToStudent(InstructorDto instructorDto) {
+    public static Instructor transformToInstructor(InstructorDto instructorDto) {
         Instructor.InstructorBuilder instructorBuilder = Instructor.builder();
         instructorBuilder.id(RandomValues.randomNumbersForId())
                 .firstName(instructorDto.getFirstName())
