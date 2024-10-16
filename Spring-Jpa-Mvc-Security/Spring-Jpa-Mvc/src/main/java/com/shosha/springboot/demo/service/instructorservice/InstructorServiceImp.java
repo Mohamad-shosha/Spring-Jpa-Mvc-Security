@@ -172,7 +172,6 @@ public class InstructorServiceImp implements InstructorService {
 
     @Override
     public boolean isNullOrNot(String id) throws InstructorNotFoundException {
-        Optional<Instructor> instructor = instructorRepository.findById(id);
-        return instructor.isPresent();
+        return instructorRepository.existsById(id);
     }
 }

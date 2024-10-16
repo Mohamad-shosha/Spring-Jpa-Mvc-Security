@@ -2,24 +2,30 @@ import com.shosha.springboot.demo.InstructorsManagmentSystem;
 import com.shosha.springboot.demo.dao.instructorrepository.InstructorRepository;
 import com.shosha.springboot.demo.model.entity.Instructor;
 import com.shosha.springboot.demo.service.instructorservice.InstructorService;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.mock.web.MockHttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
+@AutoConfigureMockMvc
 @SpringBootTest(classes = InstructorsManagmentSystem.class)
 public class InstructorManagmentSystemTest {
+
+    private static MockHttpServletRequest request;
+
     @Autowired
     private JdbcTemplate jdbc;
 
-    @Autowired
+    @Mock
     private InstructorRepository instructorRepository;
 
     @Autowired
@@ -32,26 +38,51 @@ public class InstructorManagmentSystemTest {
     }
 
     @Test
-    public void isStudentNullCheck() {
-        assertTrue(instructorService.isNullOrNot("6bd15419-2bc6-42da-adcc-4c61e361b861"));
-        assertFalse(instructorService.isNullOrNot("ea7ccec0-a718-4c43-888e-f5da2e66a39b"));
+    @Order(1)
+    public void testIsInstructorNullCheck() {
+        String existingInstructorId = "6bd15419-2bc6-42da-adcc-4c61e361b861";
+        String nonExistingInstructorId = "ea7ccec0-a718-4c43-888e-f5da2e66a39b";
+
+        when(instructorRepository.existsById(existingInstructorId)).thenReturn(true);
+        when(instructorRepository.existsById(nonExistingInstructorId)).thenReturn(false);
+
+        assertTrue(instructorService.isNullOrNot(existingInstructorId));
+        assertFalse(instructorService.isNullOrNot(nonExistingInstructorId));
     }
 
     @Test
+    @Order(4)
+    public void testListInstructorViewMvc() throws Exception {
+        Instructor instructor1 = Instructor.builder()
+                .id("12345678-xyzv-1234-efgh-123456789abc")
+                .firstName("John")
+                .lastName("Doe")
+                .birthDate("1990-05-15")
+                .email("john.doe@example.com")
+                .build();
+
+        ArrayList<Instructor> instructors = new ArrayList<>();
+        instructors.add(instructor1);
+
+        when(instructorRepository.findAll()).thenReturn(instructors);
+
+        List<Instructor> actualInstructors = instructorService.findAllInstructors();
+
+        Assertions.assertSame(instructors.get(0), actualInstructors.get(0),"Must be same object");
+    }
+
+
+
+    @Test
+    @Order(2)
     public void getInstructorsSizeInDatabase() {
-        List<Instructor> instructors = instructorService.findAllInstructors();
-        assertEquals(10, instructors.size());
-    }
-
-    @Test
-    public void getSpecificInstructor() {
-        assertTrue(instructorService.isNullOrNot("12345678-xyzv-1234-efgh-123456789abc"));
+        Integer mockInstructorsNumber = instructorService.findAllInstructors().size();
+        assertEquals(mockInstructorsNumber, 10);
     }
 
     @AfterEach
     public void tearDown() {
         jdbc.execute("DELETE FROM instructor WHERE instructor_id = '12345678-xyzv-1234-efgh-123456789abc';");
     }
-
 
 }
