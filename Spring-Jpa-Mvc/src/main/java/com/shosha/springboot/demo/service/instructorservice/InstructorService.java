@@ -122,4 +122,20 @@ public interface InstructorService {
      */
     AddressDto findAddressByCourseName(String courseName) throws InstructorNotFoundException;
 
+    /**
+     * Checks if the provided instructor ID is null or not.
+     *
+     * @param id the instructor ID to check for nullity
+     * @return true if the ID is null or empty, false otherwise
+     * @throws InstructorNotFoundException if there is an issue retrieving the instructor information
+     */
+    boolean isNullOrNot(String id) throws InstructorNotFoundException;
+
+    /**
+     * Counts the total number of saved instructors in the system.
+     *
+     * @return the count of instructors as a Long value
+     */
+    Long countOfSavedInstructors();
+
 }

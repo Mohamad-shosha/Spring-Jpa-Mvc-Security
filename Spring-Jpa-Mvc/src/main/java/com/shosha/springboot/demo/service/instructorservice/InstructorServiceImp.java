@@ -160,6 +160,7 @@ public class InstructorServiceImp implements InstructorService {
         return AddressTransformation.transformToAddressDto(instructorRepository.getAddressByEmail(email));
     }
 
+    @Override
     public AddressDto findAddressByCourseName(String courseName) {
         Optional<Instructor> instructor = instructorRepository.findByCourseName(courseName);
         if (instructor.isEmpty()) {
@@ -168,5 +169,15 @@ public class InstructorServiceImp implements InstructorService {
         }
         return AddressTransformation.transformToAddressDto(instructorRepository.
                 getAddressByCourseName(courseName));
+    }
+
+    @Override
+    public boolean isNullOrNot(String id) throws InstructorNotFoundException {
+        return instructorRepository.existsById(id);
+    }
+
+    @Override
+    public Long countOfSavedInstructors() {
+        return instructorRepository.count();
     }
 }

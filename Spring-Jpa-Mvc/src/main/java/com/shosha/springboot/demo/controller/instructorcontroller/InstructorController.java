@@ -6,6 +6,7 @@ import com.shosha.springboot.demo.model.dto.InstructorDto;
 import com.shosha.springboot.demo.model.entity.Instructor;
 import com.shosha.springboot.demo.service.instructorservice.InstructorService;
 import com.shosha.springboot.demo.util.transformation.InstructorTransformation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ import java.util.Optional;
 public class InstructorController {
     private final InstructorService instructorService;
 
+    @Autowired
     public InstructorController(InstructorService instructorService) {
         this.instructorService = instructorService;
     }
