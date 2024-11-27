@@ -8,7 +8,6 @@ import java.util.UUID;
 
 /**
  * Repository interface for managing Course entities.
- *
  * Provides CRUD operations and additional methods for managing
  * courses in the system.
  */

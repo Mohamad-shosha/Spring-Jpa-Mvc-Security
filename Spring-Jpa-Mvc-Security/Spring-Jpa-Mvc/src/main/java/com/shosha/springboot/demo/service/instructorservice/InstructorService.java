@@ -14,8 +14,19 @@ import java.util.Optional;
  */
 public interface InstructorService {
 
+    /**
+     * Find all instructors list.
+     *
+     * @return the list
+     */
     List<Instructor> findAllInstructors();
 
+    /**
+     * Find instructor by first name list.
+     *
+     * @param firstName the first name
+     * @return the list
+     */
     List<Instructor> findInstructorByFirstName(String firstName);
 
     /**
