@@ -6,7 +6,6 @@ import com.shosha.springboot.demo.model.dto.InstructorDto;
 import com.shosha.springboot.demo.model.entity.Instructor;
 import com.shosha.springboot.demo.service.instructorservice.InstructorService;
 import com.shosha.springboot.demo.util.transformation.InstructorTransformation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,56 +14,58 @@ import java.util.List;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/instructors")
 public class InstructorController {
     private final InstructorService instructorService;
 
-    @Autowired
     public InstructorController(InstructorService instructorService) {
         this.instructorService = instructorService;
     }
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
 
-    @GetMapping
+    @GetMapping("/")
     public String listInstructors(Model model) {
         List<Instructor> instructors = instructorService.findAllInstructors();
         model.addAttribute("instructors", instructors);
         return "list-instructors";
     }
 
-    @GetMapping("/new")
+    @GetMapping("/instructors/new")
     public String showInstructorForm(Model model) {
         model.addAttribute("instructor", new InstructorDto());
         return "instructors-form-add";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/instructors/save")
     public String saveInstructor(@ModelAttribute InstructorDto instructorDto) throws SqlConstraintException {
         instructorService.save(instructorDto);
-        return "redirect:/instructors";
+        return "redirect:/";
     }
 
-    @GetMapping("/search")
+    @GetMapping("/instructors/search")
     public String searchInstructor(@RequestParam String firstName, Model model) {
         List<Instructor> instructor = instructorService.findInstructorByFirstName(firstName);
         model.addAttribute("instructors", instructor);
         return "instructors-search-results";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/instructors/edit/{id}")
     public String showUpdateInstructorForm(@PathVariable String id, Model model) {
         Instructor instructor = instructorService.findById(id);
         model.addAttribute("instructor", instructor);
         return "instructors-form-update";
     }
 
-    @PostMapping("/update/{id}")
+    @PostMapping("/instructors/update/{id}")
     public String updateInstructor(@PathVariable String id, @ModelAttribute Instructor instructor) throws SqlConstraintException {
         InstructorDto instructorDto = InstructorTransformation.transformToInstructorDto(instructor);
         instructorService.update(instructorDto, id);
-        return "redirect:/instructors";
+        return "redirect:/";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/instructors/{id}")
     public String getInstructor(@PathVariable String id, Model model) {
         Instructor instructor = instructorService.findById(id);
         InstructorDto instructorDto = instructorService.getInstructorDtoById(id);
@@ -72,13 +73,13 @@ public class InstructorController {
         return "instructor-details";
     }
 
-    @GetMapping("/getCourseCode")
+    @GetMapping("/instructors/getCourseCode")
     public String getCourseCodeOfTheInstructor(Model model) {
         model.addAttribute("instructorEmail", new InstructorDto());
         return "instructors-get-course-code";
     }
 
-    @GetMapping("/courseCode")
+    @GetMapping("/instructors/courseCode")
     public String getCourseCodeOfTheInstructorWithEmail(@RequestParam String email, Model model) {
         Optional<Instructor> instructor = instructorService.findInstructorByEmail(email);
         if (instructor.isPresent()) {
@@ -86,16 +87,16 @@ public class InstructorController {
                     InstructorTransformation.transformToInstructorDto(instructor.get()));
             return "instructor-course-code";
         } else
-            return "redirect:/instructors";
+            return "redirect:/";
     }
 
-    @GetMapping("/getAddress")
+    @GetMapping("/instructors/getAddress")
     public String getAddressOfTheInstructor(Model model) {
         model.addAttribute("instructorAddress", new InstructorDto());
         return "instructors-get-address";
     }
 
-    @GetMapping("/address")
+    @GetMapping("/instructors/address")
     public String getAddressOfTheInstructor(@RequestParam String email, Model model) {
         Optional<Instructor> instructor = instructorService.findInstructorByEmail(email);
         if (instructor.isPresent()) {
@@ -103,27 +104,31 @@ public class InstructorController {
                     InstructorTransformation.transformToInstructorDto(instructor.get()));
             return "instructor-address";
         } else {
-            return "redirect:/instructors";
+            return "redirect:/";
         }
     }
 
-    @GetMapping("/delete/{id}")
+    @GetMapping("/instructors/delete/{id}")
     public String deleteInstructorById(@PathVariable String id) {
         instructorService.delete(id);
-        return "redirect:/instructors";
+        return "redirect:/";
     }
 
-    @GetMapping("/getCourse")
+    @GetMapping("/instructors/getCourse")
     public String getAddressByCourseName(Model model) {
         model.addAttribute("courseAddress", new InstructorDto());
         return "instructors-get-address-course-name";
     }
 
-    @GetMapping("/course/address")
+    @GetMapping("/instructors/course/address")
     public String getAddressByCourseName(@RequestParam String courseName, Model model) {
         AddressDto addressDto = instructorService.findAddressByCourseName(courseName);
         model.addAttribute("address", addressDto);
         return "course-address";
+    }
+    @GetMapping("/instructors/access-denied")
+    public String accessDenied(){
+        return "access-denied";
     }
 
 }
