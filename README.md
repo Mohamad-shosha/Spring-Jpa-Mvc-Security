@@ -1,4 +1,4 @@
-# 🌟 Spring-MVC-JPA
+# 🌟 Spring-MVC-JPA-Security
 
 This project showcases the powerful integration of **Spring MVC** with **Java Persistence API (JPA)**, utilizing **Hibernate** for efficient Object-Relational Mapping (ORM). 
 
